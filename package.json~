@@ -1,0 +1,31 @@
+{
+  "name": "netatmo-swagger-ui",
+  "version": "1.0.0",
+  "description": "Swagger UI site for Netatmo API with Oauth2 support",
+  "main": "index.js",
+  "dependencies": {
+    "swagger-ui": "2.1.0",
+    "express": "~4.9.x"
+  },
+  "engines": {
+    "node": "0.12.2"
+  },
+  "scripts": {
+    "start": "node index.js",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cbornet/netatmo-swagger-ui.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cbornet/netatmo-swagger-ui/issues"
+  },
+  "homepage": "https://github.com/cbornet/netatmo-swagger-ui#readme",
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ]
+}
