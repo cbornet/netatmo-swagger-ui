@@ -9,7 +9,7 @@ app.use(express.static(__dirname + '/node_modules/swagger-ui/dist'));
 app.post('/oauth2/token', function(req, res) {
   var qs = req.params;
   qs.client_secret='2j9eANMyxorN7z1EGL9Jnf2N98vavLSPwwKLNkZxluj';
-  console.log("form: " + qs);
+  console.log(qs);
   request({ 
     url: 'https://api.netatmo.net/oauth2/token',
     method: 'POST',
