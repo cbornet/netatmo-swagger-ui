@@ -20,7 +20,7 @@ app.post('/oauth2/token', function(req, res) {
   }, function(err, response, body) {
     if(err) { console.log("***" + err); return; }
     console.log("Get response: " + response.statusCode);
-    res.send(body);
+    res.json(body);
   });
 });
 
