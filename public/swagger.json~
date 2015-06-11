@@ -393,7 +393,7 @@
         {
             "type": "oauth2",
             "authorizationUrl": "https://api.netatmo.net/oauth2/authorize",
-            "tokenUrl": "/oauth2/token",
+            "tokenUrl": "https://api.netatmo.net/oauth2/token",
             "flow": "accessCode",
             "scopes":
             {
