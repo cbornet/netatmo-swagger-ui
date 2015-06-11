@@ -1,13 +1,16 @@
 var express = require('express');
 var request = require('request');
+var bodyParser = require('body-parser');
+
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/node_modules/swagger-ui/dist'));
 
 app.post('/oauth2/token', function(req, res) {
-  var qs = req.params;
+  var qs = req.body;
   qs.client_secret='2j9eANMyxorN7z1EGL9Jnf2N98vavLSPwwKLNkZxluj';
   console.log(qs);
   request({ 
