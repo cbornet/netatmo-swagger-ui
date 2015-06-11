@@ -7,7 +7,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/node_modules/swagger-ui/dist'));
 
 app.post('/oauth2/token', function(req, res) {
-  var qs = req.query;
+  var qs = req.params;
   qs.client_secret='2j9eANMyxorN7z1EGL9Jnf2N98vavLSPwwKLNkZxluj';
   console.log(qs);
   request({ 
