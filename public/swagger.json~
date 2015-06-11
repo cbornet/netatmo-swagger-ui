@@ -15,12 +15,6 @@
         "description" : "The method createnewschedule creates a new schedule stored in the backup list.",
         "operationId" : "createnewschedule",
         "parameters" : [ {
-          "name" : "access_token",
-          "in" : "query",
-          "description" : "Your access token",
-          "required" : true,
-          "type" : "string"
-        }, {
           "name" : "device_id",
           "in" : "query",
           "description" : "The relay id",
@@ -48,7 +42,16 @@
               "$ref" : "#/definitions/NANewScheduleResponse"
             }
           }
-        }
+        },
+        "security":
+        [
+          {
+            "netatmo_auth":
+              [
+                "write_thermostat"
+              ]
+           }
+        ]
       }
     },
     "/devicelist" : {
@@ -56,12 +59,6 @@
         "description" : "The method devicelist returns the list of devices owned by the user, and their modules.\nA device is identified by its _id (which is its mac address) and each device may have one, several or no modules, also identified by an _id.\n",
         "operationId" : "devicelist",
         "parameters" : [ {
-          "name" : "access_token",
-          "in" : "query",
-          "description" : "Your access token",
-          "required" : true,
-          "type" : "string"
-        }, {
           "name" : "app_type",
           "in" : "query",
           "description" : "Defines which device type will be returned by devicelist. It could be app_thermostat or app_station (by default if not provided)",
@@ -88,7 +85,17 @@
               "$ref" : "#/definitions/NADeviceListResponse"
             }
           }
-        }
+        },
+        "security":
+        [
+          {
+            "netatmo_auth":
+              [
+                "read_thermostat",
+                "read_station
+              ]
+           }
+        ]
       }
     },
     "/getmeasure" : {
@@ -96,12 +103,6 @@
         "description" : "The method getmeasure returns the measurements of a device or a module.\n",
         "operationId" : "getmeasure",
         "parameters" : [ {
-          "name" : "access_token",
-          "in" : "query",
-          "description" : "Your access token",
-          "required" : true,
-          "type" : "string"
-        }, {
           "name" : "device_id",
           "in" : "query",
           "description" : "Id of the device whose module's measurements you want to retrieve. This _id can be found in the user's devices field.",
@@ -170,7 +171,17 @@
               "$ref" : "#/definitions/NAMeasureResponse"
             }
           }
-        }
+        },
+        "security":
+        [
+          {
+            "netatmo_auth":
+              [
+                "read_thermostat",
+                "read_station"
+              ]
+           }
+        ]
       }
     },
     "/getthermstate" : {
@@ -178,12 +189,6 @@
         "description" : "The method getthermstate returns the last Thermostat measurements, its current weekly schedule, and, if present, its current manual temperature setpoint.",
         "operationId" : "getthermstate",
         "parameters" : [ {
-          "name" : "access_token",
-          "in" : "query",
-          "description" : "Your access token",
-          "required" : true,
-          "type" : "string"
-        }, {
           "name" : "device_id",
           "in" : "query",
           "description" : "The relay id",
@@ -203,7 +208,16 @@
               "$ref" : "#/definitions/NAThermStateResponse"
             }
           }
-        }
+        },
+        "security":
+        [
+          {
+            "netatmo_auth":
+              [
+                "read_thermostat"
+              ]
+           }
+        ]
       }
     },
     "/getuser" : {
@@ -221,11 +235,7 @@
         "security":
         [
           {
-            "netatmo_auth":
-              [
-                "write_thermostat",
-                "read_thermostat"
-              ]
+            "netatmo_auth":[]
            }
         ]
             
@@ -235,13 +245,6 @@
       "get" : {
         "description" : "The method partnerdevices returns the list of device_id to which your partner application has access to.",
         "operationId" : "partnerdevices",
-        "parameters" : [ {
-          "name" : "access_token",
-          "in" : "query",
-          "description" : "Your access token",
-          "required" : true,
-          "type" : "string"
-        } ],
         "responses" : {
           "200" : {
             "description" : "Successful response",
@@ -257,12 +260,6 @@
         "description" : "The method setthermpoint changes the Thermostat manual temperature setpoint.",
         "operationId" : "setthermpoint",
         "parameters" : [ {
-          "name" : "access_token",
-          "in" : "query",
-          "description" : "Your access token",
-          "required" : true,
-          "type" : "string"
-        }, {
           "name" : "device_id",
           "in" : "query",
           "description" : "The relay id",
@@ -303,7 +300,16 @@
               "$ref" : "#/definitions/NAOkResponse"
             }
           }
-        }
+        },
+        "security":
+        [
+          {
+            "netatmo_auth":
+              [
+                "write_thermostat"
+              ]
+           }
+        ]
       }
     },
     "/switchschedule" : {
@@ -311,12 +317,6 @@
         "description" : "The method switchschedule switches the Thermostat's schedule to another existing schedule.",
         "operationId" : "switchschedule",
         "parameters" : [ {
-          "name" : "access_token",
-          "in" : "query",
-          "description" : "Your access token",
-          "required" : true,
-          "type" : "string"
-        }, {
           "name" : "device_id",
           "in" : "query",
           "description" : "The relay id",
@@ -342,7 +342,16 @@
               "$ref" : "#/definitions/NAOkResponse"
             }
           }
-        }
+        },
+        "security":
+        [
+          {
+            "netatmo_auth":
+              [
+                "write_thermostat"
+              ]
+           }
+        ]
       }
     },
     "/syncschedule" : {
@@ -350,12 +359,6 @@
         "description" : "The method syncschedule changes the Thermostat weekly schedule.",
         "operationId" : "syncschedule",
         "parameters" : [ {
-          "name" : "access_token",
-          "in" : "query",
-          "description" : "Your access token",
-          "required" : true,
-          "type" : "string"
-        }, {
           "name" : "device_id",
           "in" : "query",
           "description" : "The relay id",
@@ -383,7 +386,16 @@
               "$ref" : "#/definitions/NAOkResponse"
             }
           }
-        }
+        },
+        "security":
+        [
+          {
+            "netatmo_auth":
+              [
+                "write_thermostat"
+              ]
+           }
+        ]
       }
     }
   },
@@ -393,7 +405,7 @@
         {
             "type": "oauth2",
             "authorizationUrl": "https://api.netatmo.net/oauth2/authorize",
-            "tokenUrl": "https://api.netatmo.net/oauth2/token",
+            "tokenUrl": "/oauth2/token",
             "flow": "accessCode",
             "scopes":
             {
