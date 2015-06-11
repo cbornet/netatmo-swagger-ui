@@ -2,16 +2,29 @@
   "swagger" : "2.0",
   "info" : {
     "version" : "0.1.0",
-    "title" : "Netatmo API"
+    "title" : "Netatmo"
   },
   "host" : "api.netatmo.net",
   "basePath" : "/api",
   "schemes" : [ "https" ],
   "consumes" : [ "text/plain" ],
   "produces" : [ "application/json" ],
+  "tags": [
+    {
+      "name":"private",
+      "description": "Access your devices and control them"
+    }, {
+      "name":"public",
+      "description": "Get Netatmo's public weather data"
+    }, {
+      "name":"partner",
+      "description": "API for Netatmo partners"
+    }
+  ],
   "paths" : {
     "/createnewschedule" : {
       "post" : {
+        "tags": ["private", "partner"],
         "description" : "The method createnewschedule creates a new schedule stored in the backup list.",
         "operationId" : "createnewschedule",
         "parameters" : [ {
@@ -56,6 +69,7 @@
     },
     "/devicelist" : {
       "get" : {
+        "tags": ["private", "partner"],
         "description" : "The method devicelist returns the list of devices owned by the user, and their modules.\nA device is identified by its _id (which is its mac address) and each device may have one, several or no modules, also identified by an _id.\n",
         "operationId" : "devicelist",
         "parameters" : [ {
@@ -101,6 +115,7 @@
     },
     "/getmeasure" : {
       "get" : {
+        "tags": ["private", "public", "partner"],
         "description" : "The method getmeasure returns the measurements of a device or a module.\n",
         "operationId" : "getmeasure",
         "parameters" : [ {
@@ -187,6 +202,7 @@
     },
     "/getthermstate" : {
       "get" : {
+        "tags": ["private", "partner"],
         "description" : "The method getthermstate returns the last Thermostat measurements, its current weekly schedule, and, if present, its current manual temperature setpoint.",
         "operationId" : "getthermstate",
         "parameters" : [ {
@@ -223,6 +239,7 @@
     },
     "/getuser" : {
       "get" : {
+        "tags": ["private"],
         "description" : "The method getuser returns information about a user such as prefered language, prefered units, and list of devices.\n",
         "operationId" : "getuser",
         "responses" : {
@@ -244,6 +261,7 @@
     },
     "/partnerdevices" : {
       "get" : {
+        "tags": ["partner"],
         "description" : "The method partnerdevices returns the list of device_id to which your partner application has access to.",
         "operationId" : "partnerdevices",
         "responses" : {
@@ -258,6 +276,7 @@
     },
     "/setthermpoint" : {
       "post" : {
+        "tags": ["private", "partner"],
         "description" : "The method setthermpoint changes the Thermostat manual temperature setpoint.",
         "operationId" : "setthermpoint",
         "parameters" : [ {
@@ -315,6 +334,7 @@
     },
     "/switchschedule" : {
       "post" : {
+        "tags": ["private", "partner"],
         "description" : "The method switchschedule switches the Thermostat's schedule to another existing schedule.",
         "operationId" : "switchschedule",
         "parameters" : [ {
@@ -357,6 +377,7 @@
     },
     "/syncschedule" : {
       "post" : {
+        "tags": ["private", "partner"],
         "description" : "The method syncschedule changes the Thermostat weekly schedule.",
         "operationId" : "syncschedule",
         "parameters" : [ {
