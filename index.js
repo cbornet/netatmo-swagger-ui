@@ -10,13 +10,13 @@ app.post('/oauth2/token', function(req, res) {
   var qs = req.query;
   qs.client_secret='2j9eANMyxorN7z1EGL9Jnf2N98vavLSPwwKLNkZxluj';
   request({ 
-    url: 'https://api.netatmo.net/oauth2/authorize',
+    url: 'https://api.netatmo.net/oauth2/token',
     method: 'POST', 
     headers: req.headers, 
     body: req.body,
     qs: qs
   }, function(err, response, body) {
-    if(err) { console.log(err); return; }
+    if(err) { console.log("***" + err); return; }
     console.log("Get response: " + response.statusCode);
     res.send(body);
   });
