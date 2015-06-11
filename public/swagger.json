@@ -92,7 +92,7 @@
             "netatmo_auth":
               [
                 "read_thermostat",
-                "read_station
+                "read_station"
               ]
            }
         ]
