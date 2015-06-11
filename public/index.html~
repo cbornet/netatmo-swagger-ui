@@ -37,7 +37,7 @@
           if(typeof initOAuth == "function") {
             initOAuth({
               clientId: "55744f211977595c67874864",
-              realm: "",
+              realm: "your-realms",
               appName: "your-app-name"
             });
           }
