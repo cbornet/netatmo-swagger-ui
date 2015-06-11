@@ -67,6 +67,28 @@
         ]
       }
     },
+    "/getuser" : {
+      "get" : {
+        "tags": ["private"],
+        "description" : "The method getuser returns information about a user such as prefered language, prefered units, and list of devices.\n",
+        "operationId" : "getuser",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "schema" : {
+              "$ref" : "#/definitions/NAUserResponse"
+            }
+          }
+        },
+        "security":
+        [
+          {
+            "netatmo_auth":[]
+           }
+        ]
+            
+      }
+    },
     "/devicelist" : {
       "get" : {
         "tags": ["private", "partner"],
@@ -237,41 +259,49 @@
         ]
       }
     },
-    "/getuser" : {
-      "get" : {
-        "tags": ["private"],
-        "description" : "The method getuser returns information about a user such as prefered language, prefered units, and list of devices.\n",
-        "operationId" : "getuser",
+    "/syncschedule" : {
+      "post" : {
+        "tags": ["private", "partner"],
+        "description" : "The method syncschedule changes the Thermostat weekly schedule.",
+        "operationId" : "syncschedule",
+        "parameters" : [ {
+          "name" : "device_id",
+          "in" : "query",
+          "description" : "The relay id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "module_id",
+          "in" : "query",
+          "description" : "The thermostat id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "therm_program",
+          "description" : "The thermostat program (zones, timetable and name)",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/NAThermProgram"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "Successful response",
             "schema" : {
-              "$ref" : "#/definitions/NAUserResponse"
+              "$ref" : "#/definitions/NAOkResponse"
             }
           }
         },
         "security":
         [
           {
-            "netatmo_auth":[]
+            "netatmo_auth":
+              [
+                "write_thermostat"
+              ]
            }
         ]
-            
-      }
-    },
-    "/partnerdevices" : {
-      "get" : {
-        "tags": ["partner"],
-        "description" : "The method partnerdevices returns the list of device_id to which your partner application has access to.",
-        "operationId" : "partnerdevices",
-        "responses" : {
-          "200" : {
-            "description" : "Successful response",
-            "schema" : {
-              "$ref" : "#/definitions/NAPartnerDevicesResponse"
-            }
-          }
-        }
       }
     },
     "/setthermpoint" : {
@@ -375,49 +405,19 @@
         ]
       }
     },
-    "/syncschedule" : {
-      "post" : {
-        "tags": ["private", "partner"],
-        "description" : "The method syncschedule changes the Thermostat weekly schedule.",
-        "operationId" : "syncschedule",
-        "parameters" : [ {
-          "name" : "device_id",
-          "in" : "query",
-          "description" : "The relay id",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "module_id",
-          "in" : "query",
-          "description" : "The thermostat id",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "in" : "body",
-          "name" : "therm_program",
-          "description" : "The thermostat program (zones, timetable and name)",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/NAThermProgram"
-          }
-        } ],
+    "/partnerdevices" : {
+      "get" : {
+        "tags": ["partner"],
+        "description" : "The method partnerdevices returns the list of device_id to which your partner application has access to.",
+        "operationId" : "partnerdevices",
         "responses" : {
           "200" : {
             "description" : "Successful response",
             "schema" : {
-              "$ref" : "#/definitions/NAOkResponse"
+              "$ref" : "#/definitions/NAPartnerDevicesResponse"
             }
           }
-        },
-        "security":
-        [
-          {
-            "netatmo_auth":
-              [
-                "write_thermostat"
-              ]
-           }
-        ]
+        }
       }
     }
   },

@@ -22,49 +22,26 @@
     }
   ],
   "paths" : {
-    "/createnewschedule" : {
-      "post" : {
-        "tags": ["private", "partner"],
-        "description" : "The method createnewschedule creates a new schedule stored in the backup list.",
-        "operationId" : "createnewschedule",
-        "parameters" : [ {
-          "name" : "device_id",
-          "in" : "query",
-          "description" : "The relay id",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "module_id",
-          "in" : "query",
-          "description" : "The thermostat id",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "in" : "body",
-          "name" : "therm_program",
-          "description" : "The thermostat program (zones and timetable)",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/NAThermProgram"
-          }
-        } ],
+    "/getuser" : {
+      "get" : {
+        "tags": ["private"],
+        "description" : "The method getuser returns information about a user such as prefered language, prefered units, and list of devices.\n",
+        "operationId" : "getuser",
         "responses" : {
           "200" : {
             "description" : "Successful response",
             "schema" : {
-              "$ref" : "#/definitions/NANewScheduleResponse"
+              "$ref" : "#/definitions/NAUserResponse"
             }
           }
         },
         "security":
         [
           {
-            "netatmo_auth":
-              [
-                "write_thermostat"
-              ]
+            "netatmo_auth":[]
            }
         ]
+            
       }
     },
     "/devicelist" : {
@@ -237,41 +214,49 @@
         ]
       }
     },
-    "/getuser" : {
-      "get" : {
-        "tags": ["private"],
-        "description" : "The method getuser returns information about a user such as prefered language, prefered units, and list of devices.\n",
-        "operationId" : "getuser",
+    "/syncschedule" : {
+      "post" : {
+        "tags": ["private", "partner"],
+        "description" : "The method syncschedule changes the Thermostat weekly schedule.",
+        "operationId" : "syncschedule",
+        "parameters" : [ {
+          "name" : "device_id",
+          "in" : "query",
+          "description" : "The relay id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "module_id",
+          "in" : "query",
+          "description" : "The thermostat id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "therm_program",
+          "description" : "The thermostat program (zones, timetable and name)",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/NAThermProgram"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "Successful response",
             "schema" : {
-              "$ref" : "#/definitions/NAUserResponse"
+              "$ref" : "#/definitions/NAOkResponse"
             }
           }
         },
         "security":
         [
           {
-            "netatmo_auth":[]
+            "netatmo_auth":
+              [
+                "write_thermostat"
+              ]
            }
         ]
-            
-      }
-    },
-    "/partnerdevices" : {
-      "get" : {
-        "tags": ["partner"],
-        "description" : "The method partnerdevices returns the list of device_id to which your partner application has access to.",
-        "operationId" : "partnerdevices",
-        "responses" : {
-          "200" : {
-            "description" : "Successful response",
-            "schema" : {
-              "$ref" : "#/definitions/NAPartnerDevicesResponse"
-            }
-          }
-        }
       }
     },
     "/setthermpoint" : {
@@ -375,11 +360,11 @@
         ]
       }
     },
-    "/syncschedule" : {
+    "/createnewschedule" : {
       "post" : {
         "tags": ["private", "partner"],
-        "description" : "The method syncschedule changes the Thermostat weekly schedule.",
-        "operationId" : "syncschedule",
+        "description" : "The method createnewschedule creates a new schedule stored in the backup list.",
+        "operationId" : "createnewschedule",
         "parameters" : [ {
           "name" : "device_id",
           "in" : "query",
@@ -395,7 +380,7 @@
         }, {
           "in" : "body",
           "name" : "therm_program",
-          "description" : "The thermostat program (zones, timetable and name)",
+          "description" : "The thermostat program (zones and timetable)",
           "required" : true,
           "schema" : {
             "$ref" : "#/definitions/NAThermProgram"
@@ -405,7 +390,7 @@
           "200" : {
             "description" : "Successful response",
             "schema" : {
-              "$ref" : "#/definitions/NAOkResponse"
+              "$ref" : "#/definitions/NANewScheduleResponse"
             }
           }
         },
@@ -418,6 +403,21 @@
               ]
            }
         ]
+      }
+    },
+    "/partnerdevices" : {
+      "get" : {
+        "tags": ["partner"],
+        "description" : "The method partnerdevices returns the list of device_id to which your partner application has access to.",
+        "operationId" : "partnerdevices",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "schema" : {
+              "$ref" : "#/definitions/NAPartnerDevicesResponse"
+            }
+          }
+        }
       }
     }
   },
