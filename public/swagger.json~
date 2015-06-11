@@ -63,7 +63,8 @@
           "in" : "query",
           "description" : "Defines which device type will be returned by devicelist. It could be app_thermostat or app_station (by default if not provided)",
           "required" : false,
-          "type" : "string"
+          "type" : "string",
+          "enum" : [ "app_thermostat", "app_station" ]
         }, {
           "name" : "device_id",
           "in" : "query",
@@ -76,7 +77,7 @@
           "description" : "When set to \"true\", the favorite devices of the user are returned. This flag is available only if the devices requested are Weather Stations.",
           "required" : false,
           "type" : "boolean",
-          "default" : "false"
+          "default" : null
         } ],
         "responses" : {
           "200" : {
@@ -92,7 +93,7 @@
             "netatmo_auth":
               [
                 "read_thermostat",
-                "read_station
+                "read_station"
               ]
            }
         ]
@@ -125,7 +126,7 @@
           "name" : "type",
           "in" : "query",
           "description" : "Sets the type of measurement you want to retrieve.\nThe different types of measurements must be given in a comma separated list of strings.\nExample: type=\"Temperature,Humidity\"\nDepending on the device's type and the scale, different measurements are available:\nFor Weather Station :\n  max -> Temperature, CO2, Humidity, Pressure, Noise, Rain (if module_id is a rain sensor)\n  30min, 1hour, 3hours -> Temperature, CO2, Humidity, Pressure, Noise, min_temp, max_temp, min_hum, max_hum, min_pressure, max_pressure, min_noise, max_noise, sum_rain (if module_id is a rain sensor)\n  1day, 1week, 1month -> Temperature, Co2, Humidity, Pressure, Noise, min_temp, date_min_temp, max_temp, date_max_temp, min_hum, date_min_hum, max_hum, date_max_hum, min_pressure, date_min_pressure, max_pressure, date_max_pressure, min_noise, date_min_noise, max_noise, date_max_noise, date_min_co2, date_max_co2, sum_rain (if module_id is a rain sensor)\nPlease note, the measurements sent in the response will be in the same order as in this list.\nAll measurements are expressed in metric units:\n  Temperature: Celsius\n  Humidity: %\n  Co2: ppm\n  Pressure: mbar\n  Noise: db\n  Rain: mm\nFor Thermostat:\n  max -> Temperature, Sp_Temperature, BoilerOn, BoilerOff\n  30min, 1hour, 3hours -> Temperature, Sp_Temperature, min_temp, max_temp, sum_boiler_on, sum_boiler_off\n  1day, 1week, 1month -> Temperature, min_temp, date_min_temp, max_temp, sum_boiler_on, sum_boiler_off\n  where\nTemperature: Celsius\n  Sp_Temperature (temperature setpoint): Celsius\n  BoilerOn: Duration, since the previous data point, during which the boiler has been on (in seconds)\n  BoilerOff : Duration, since the previous data point, during which the boiler has been off (in seconds).\n  sum_boiler_on: Total duration during which the boiler has been on, at a specific scale (in seconds).\n  sum_boiler_off: Total duration during which the boiler has been off, at a specific scale (in seconds).\n",
-          "required" : false,
+          "required" : true,
           "type" : "string"
         }, {
           "name" : "date_begin",
@@ -147,22 +148,22 @@
           "description" : "Limits the number of measurements returned (default & max is 1024)",
           "required" : false,
           "type" : "integer",
-          "default" : "1024",
-          "format" : "int32"
+          "format" : "int32",
+          "maximum" : 1024
         }, {
           "name" : "optimize",
           "in" : "query",
           "description" : "Allows you to choose the format of the answer.\nIf you build a mobile app and bandwith usage is an issue, use optimize = true.\nUse optimize = false, for an easier parse. In this case, values are indexed by sorted timestamp.\nExample of un-optimized response :\n{\"status\": \"ok\", \n  \"body\": {\n    \"1347575400\": [18.3,39],\n    \"1347586200\": [20.6,48]\n  },\n\"time_exec\": 0.012136936187744}\nIf optimize is set true, measurements are returned as an array of series of regularly spaced measurements. Each series is defined by a beginning time beg_time and a step between measurements, step_time:\n{\"status\": \"ok\",\n  \"body\": [\n    {\"beg_time\": 1347575400,\n     \"step_time\": 10800,\n     \"value\": \n        [[18.3,39],\n        [ 20.6,48]]\n    }],\n\"time_exec\": 0.014238119125366}\nDefault value is true.\n",
           "required" : false,
           "type" : "boolean",
-          "default" : "true"
+          "default" : null
         }, {
           "name" : "real_time",
           "in" : "query",
           "description" : "In scales higher than max, since the data is aggregated, the timestamps returned are by default offset by +(scale/2).\nFor instance, if you ask for measurements at a daily scale, you will receive data timestamped at 12:00 if real_time is set to false (default case), and timestamped at 00:00 if real_time is set to true.\nNB : The servers always store data with real_time set to true and data are offset by this parameter AFTER having being time-filtered, thus you could have data after date_end if real_time is set to false.\n",
           "required" : false,
           "type" : "boolean",
-          "default" : "false"
+          "default" : null
         } ],
         "responses" : {
           "200" : {
