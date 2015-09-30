@@ -5,8 +5,6 @@ var clientId;
 var realm;
 var oauth2KeyName;
 var redirect_uri;
-var clientSecret;
-var scopeSeparator;
 
 function handleLogin() {
   var scopes = [];
@@ -42,7 +40,6 @@ function handleLogin() {
     appName = window.swaggerUi.api.info.title;
   }
 
-  $('.api-popup-dialog').remove(); 
   popupDialog = $(
     [
       '<div class="api-popup-dialog">',
@@ -154,7 +151,7 @@ function handleLogin() {
     url += '&redirect_uri=' + encodeURIComponent(redirectUrl);
     url += '&realm=' + encodeURIComponent(realm);
     url += '&client_id=' + encodeURIComponent(clientId);
-    url += '&scope=' + encodeURIComponent(scopes.join(scopeSeparator));
+    url += '&scope=' + encodeURIComponent(scopes.join(' '));
     url += '&state=' + encodeURIComponent(state);
 
     window.open(url);
@@ -167,8 +164,8 @@ function handleLogin() {
 
 
 function handleLogout() {
-  for(key in window.swaggerUi.api.clientAuthorizations.authz){
-    window.swaggerUi.api.clientAuthorizations.remove(key)
+  for(key in window.authorizations.authz){
+    window.authorizations.remove(key)
   }
   window.enabledScopes = null;
   $('.api-ic.ic-on').addClass('ic-off');
@@ -187,9 +184,7 @@ function initOAuth(opts) {
   popupMask = (o.popupMask||$('#api-common-mask'));
   popupDialog = (o.popupDialog||$('.api-popup-dialog'));
   clientId = (o.clientId||errors.push('missing client id'));
-  clientSecret = (o.clientSecret||errors.push('missing client secret'));
   realm = (o.realm||errors.push('missing realm'));
-  scopeSeparator = (o.scopeSeparator||' ');
 
   if(errors.length > 0){
     log('auth unable initialize oauth: ' + errors);
@@ -211,7 +206,6 @@ function initOAuth(opts) {
 window.processOAuthCode = function processOAuthCode(data) {
   var params = {
     'client_id': clientId,
-    'client_secret': clientSecret,
     'code': data.code,
     'grant_type': 'authorization_code',
     'redirect_uri': redirect_uri
@@ -246,7 +240,7 @@ window.onOAuthComplete = function onOAuthComplete(token) {
       if(b){
         // if all roles are satisfied
         var o = null;
-        $.each($('.auth .api-ic .api_information_panel'), function(k, v) {
+        $.each($('.auth #api_information_panel'), function(k, v) {
           var children = v;
           if(children && children.childNodes) {
             var requiredScopes = [];
@@ -263,7 +257,7 @@ window.onOAuthComplete = function onOAuthComplete(token) {
               }
             }
             if(diff.length > 0){
-              o = v.parentNode.parentNode;
+              o = v.parentNode;
               $(o.parentNode).find('.api-ic.ic-on').addClass('ic-off');
               $(o.parentNode).find('.api-ic.ic-on').removeClass('ic-on');
 
@@ -272,7 +266,7 @@ window.onOAuthComplete = function onOAuthComplete(token) {
               $(o).find('.api-ic').removeClass('ic-error');
             }
             else {
-              o = v.parentNode.parentNode;
+              o = v.parentNode;
               $(o.parentNode).find('.api-ic.ic-off').addClass('ic-on');
               $(o.parentNode).find('.api-ic.ic-off').removeClass('ic-off');
 
@@ -283,7 +277,8 @@ window.onOAuthComplete = function onOAuthComplete(token) {
             }
           }
         });
-        window.swaggerUi.api.clientAuthorizations.add(oauth2KeyName, new SwaggerClient.ApiKeyAuthorization('Authorization', 'Bearer ' + b, 'header'));
+        //window.swaggerUi.api.clientAuthorizations.add(oauth2KeyName, new SwaggerClient.ApiKeyAuthorization('Authorization', 'Bearer ' + b, 'header'));
+        window.swaggerUi.api.clientAuthorizations.add(oauth2KeyName, new SwaggerClient.ApiKeyAuthorization('access_token', b, 'query'));
       }
     }
   }

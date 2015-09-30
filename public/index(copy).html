@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
   <title>Swagger UI</title>
   <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
@@ -22,11 +21,6 @@
   <script src='lib/marked.js' type='text/javascript'></script>
   <script src='lib/swagger-oauth.js' type='text/javascript'></script>
 
-  <!-- Some basic translations -->
-  <!-- <script src='lang/translator.js' type='text/javascript'></script> -->
-  <!-- <script src='lang/ru.js' type='text/javascript'></script> -->
-  <!-- <script src='lang/en.js' type='text/javascript'></script> -->
-
   <script type="text/javascript">
     $(function () {
       var url = window.location.search.match(/url=([^&]+)/);
@@ -34,11 +28,6 @@
         url = decodeURIComponent(url[1]);
       } else {
         url = "/swagger.json";
-      }
-
-      // Pre load translate...
-      if(window.SwaggerTranslator) {
-        window.SwaggerTranslator.translate();
       }
       window.swaggerUi = new SwaggerUi({
         url: url,
@@ -50,13 +39,8 @@
               clientId: "55744f211977595c67874864",
               clientSecret: "2j9eANMyxorN7z1EGL9Jnf2N98vavLSPwwKLNkZxluj",
               realm: "your-realms",
-              appName: "Netatmo swagger", 
-              scopeSeparator: " "
+              appName: "Netatmo swagger"
             });
-          }
-
-          if(window.SwaggerTranslator) {
-            window.SwaggerTranslator.translate();
           }
 
           $('pre code').each(function(i, e) {
@@ -109,7 +93,7 @@
   </div>
 </div>
 
-<div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>
+<div id="message-bar" class="swagger-ui-wrap">&nbsp;</div>
 <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
 </body>
 </html>
