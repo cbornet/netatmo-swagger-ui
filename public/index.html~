@@ -53,6 +53,7 @@
         },
         docExpansion: "none",
         //apisSorter: "alpha",
+        validatorUrl: null,
         showRequestHeaders: false
       });
 
