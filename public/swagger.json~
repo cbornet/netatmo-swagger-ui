@@ -22,51 +22,6 @@
     }
   ],
   "paths" : {
-    "/createnewschedule" : {
-      "post" : {
-        "tags": ["private", "partner"],
-        "description" : "The method createnewschedule creates a new schedule stored in the backup list.",
-        "operationId" : "createnewschedule",
-        "parameters" : [ {
-          "name" : "device_id",
-          "in" : "query",
-          "description" : "The relay id",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "module_id",
-          "in" : "query",
-          "description" : "The thermostat id",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "in" : "body",
-          "name" : "therm_program",
-          "description" : "The thermostat program (zones and timetable)",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/NAThermProgram"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Successful response",
-            "schema" : {
-              "$ref" : "#/definitions/NANewScheduleResponse"
-            }
-          }
-        },
-        "security":
-        [
-          {
-            "netatmo_auth":
-              [
-                "write_thermostat"
-              ]
-           }
-        ]
-      }
-    },
     "/getuser" : {
       "get" : {
         "tags": ["private"],
@@ -84,7 +39,7 @@
         [
           {
             "netatmo_auth":[]
-           }
+          }
         ]
             
       }
@@ -391,6 +346,51 @@
             "description" : "Successful response",
             "schema" : {
               "$ref" : "#/definitions/NAOkResponse"
+            }
+          }
+        },
+        "security":
+        [
+          {
+            "netatmo_auth":
+              [
+                "write_thermostat"
+              ]
+           }
+        ]
+      }
+    },
+    "/createnewschedule" : {
+      "post" : {
+        "tags": ["private", "partner"],
+        "description" : "The method createnewschedule creates a new schedule stored in the backup list.",
+        "operationId" : "createnewschedule",
+        "parameters" : [ {
+          "name" : "device_id",
+          "in" : "query",
+          "description" : "The relay id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "module_id",
+          "in" : "query",
+          "description" : "The thermostat id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "therm_program",
+          "description" : "The thermostat program (zones and timetable)",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/NAThermProgram"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "schema" : {
+              "$ref" : "#/definitions/NANewScheduleResponse"
             }
           }
         },

@@ -39,7 +39,7 @@
         [
           {
             "netatmo_auth":[]
-           }
+          }
         ]
             
       }
@@ -428,7 +428,7 @@
             "type": "oauth2",
             "authorizationUrl": "https://api.netatmo.net/oauth2/authorize",
             "tokenUrl": "/oauth2/token",
-            "flow": "accessCode",
+            "flow": "implicit",
             "scopes":
             {
                 "read_station": "Read weather station's data",
