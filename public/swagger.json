@@ -38,7 +38,10 @@
         "security":
         [
           {
-            "netatmo_auth":[]
+            "code_oauth":[]
+          },
+          {
+            "password_oauth":[]
           }
         ]
             
@@ -80,12 +83,19 @@
         "security":
         [
           {
-            "netatmo_auth":
+            "code_oauth":
               [
                 "read_thermostat",
                 "read_station"
               ]
-           }
+          },
+          {
+            "password_oauth":
+              [
+                "read_thermostat",
+                "read_station"
+              ]
+          }
         ]
       }
     },
@@ -165,12 +175,19 @@
         "security":
         [
           {
-            "netatmo_auth":
+            "code_oauth":
               [
                 "read_thermostat",
                 "read_station"
               ]
-           }
+          },
+          {
+            "password_oauth":
+              [
+                "read_thermostat",
+                "read_station"
+              ]
+          }
         ]
       }
     },
@@ -203,11 +220,17 @@
         "security":
         [
           {
-            "netatmo_auth":
+            "code_oauth":
               [
                 "read_thermostat"
               ]
-           }
+          },
+          {
+            "password_oauth":
+              [
+                "read_thermostat"
+              ]
+          }
         ]
       }
     },
@@ -248,11 +271,17 @@
         "security":
         [
           {
-            "netatmo_auth":
+            "code_oauth":
               [
                 "write_thermostat"
               ]
-           }
+          },
+          {
+            "password_oauth":
+              [
+                "write_thermostat"
+              ]
+          }
         ]
       }
     },
@@ -306,11 +335,17 @@
         "security":
         [
           {
-            "netatmo_auth":
+            "code_oauth":
               [
                 "write_thermostat"
               ]
-           }
+          },
+          {
+            "password_oauth":
+              [
+                "write_thermostat"
+              ]
+          }
         ]
       }
     },
@@ -349,11 +384,17 @@
         "security":
         [
           {
-            "netatmo_auth":
+            "code_oauth":
               [
                 "write_thermostat"
               ]
-           }
+          },
+          {
+            "password_oauth":
+              [
+                "write_thermostat"
+              ]
+          }
         ]
       }
     },
@@ -394,11 +435,17 @@
         "security":
         [
           {
-            "netatmo_auth":
+            "code_oauth":
               [
                 "write_thermostat"
               ]
-           }
+          },
+          {
+            "password_oauth":
+              [
+                "write_thermostat"
+              ]
+          }
         ]
       }
     },
@@ -420,12 +467,24 @@
   },
 "securityDefinitions":
     {
-        "netatmo_auth":
+        "code_oauth":
         {
             "type": "oauth2",
             "authorizationUrl": "https://api.netatmo.net/oauth2/authorize",
             "tokenUrl": "https://api.netatmo.net/oauth2/token",
             "flow": "accessCode",
+            "scopes":
+            {
+                "read_station": "Read weather station's data",
+                "write_thermostat": "Configure the thermostat",
+                "read_thermostat": "Read thermostat's data"
+            }
+        },
+        "password_oauth":
+        {
+            "type": "oauth2",
+            "tokenUrl": "https://api.netatmo.net/oauth2/token",
+            "flow": "password",
             "scopes":
             {
                 "read_station": "Read weather station's data",
