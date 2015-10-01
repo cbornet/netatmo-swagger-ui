@@ -67,8 +67,7 @@
           "in" : "query",
           "description" : "When set to \"true\", the favorite devices of the user are returned. This flag is available only if the devices requested are Weather Stations.",
           "required" : false,
-          "type" : "boolean",
-          "default" : null
+          "type" : "boolean"
         } ],
         "responses" : {
           "200" : {
@@ -147,15 +146,13 @@
           "in" : "query",
           "description" : "Allows you to choose the format of the answer.\nIf you build a mobile app and bandwith usage is an issue, use optimize = true.\nUse optimize = false, for an easier parse. In this case, values are indexed by sorted timestamp.\nExample of un-optimized response :\n{\"status\": \"ok\", \n  \"body\": {\n    \"1347575400\": [18.3,39],\n    \"1347586200\": [20.6,48]\n  },\n\"time_exec\": 0.012136936187744}\nIf optimize is set true, measurements are returned as an array of series of regularly spaced measurements. Each series is defined by a beginning time beg_time and a step between measurements, step_time:\n{\"status\": \"ok\",\n  \"body\": [\n    {\"beg_time\": 1347575400,\n     \"step_time\": 10800,\n     \"value\": \n        [[18.3,39],\n        [ 20.6,48]]\n    }],\n\"time_exec\": 0.014238119125366}\nDefault value is true.\n",
           "required" : false,
-          "type" : "boolean",
-          "default" : null
+          "type" : "boolean"
         }, {
           "name" : "real_time",
           "in" : "query",
           "description" : "In scales higher than max, since the data is aggregated, the timestamps returned are by default offset by +(scale/2).\nFor instance, if you ask for measurements at a daily scale, you will receive data timestamped at 12:00 if real_time is set to false (default case), and timestamped at 00:00 if real_time is set to true.\nNB : The servers always store data with real_time set to true and data are offset by this parameter AFTER having being time-filtered, thus you could have data after date_end if real_time is set to false.\n",
           "required" : false,
-          "type" : "boolean",
-          "default" : null
+          "type" : "boolean"
         } ],
         "responses" : {
           "200" : {
