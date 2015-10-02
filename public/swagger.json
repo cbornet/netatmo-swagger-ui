@@ -38,9 +38,6 @@
         "security":
         [
           {
-            "code_oauth":[]
-          },
-          {
             "password_oauth":[]
           }
         ]
@@ -484,13 +481,8 @@
         {
             "type": "oauth2",
             "tokenUrl": "https://api.netatmo.net/oauth2/token",
-            "flow": "password",
-            "scopes":
-            {
-                "read_station": "Read weather station's data",
-                "write_thermostat": "Configure the thermostat",
-                "read_thermostat": "Read thermostat's data"
-            }
+            "flow": "credentials",
+            "scopes":{}
         }
 },
   "definitions" : {
