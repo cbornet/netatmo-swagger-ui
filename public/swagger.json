@@ -1339,8 +1339,8 @@
                     "format": "int32"
                 },
                 "device_id": {
-                    "type": "integer",
-                    "format": "int32"
+                    "type": "number",
+                    "format": "float"
                 },
                 "BoilerOn": {
                     "type": "integer",
