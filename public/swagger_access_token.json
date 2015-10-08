@@ -6,7 +6,7 @@
         "description": "<h3>Welcome to the Netatmo swagger on-line documentation !</h3>This site is a complement to the official <a href=\"https://dev.netatmo.com/\">Netatmo developper documentation</a> using swagger to bring interactivity and easy testing of requests with the \"try it\" button (authenticate with the authorization code 0Auth2 flow by clicking the authenticate button in the methods). You can find the source code for this site can be found in the project <a href=\"https://github.com/cbornet/netatmo-swagger-ui\">netatmo-swagger-ui</a>. You can also use the online <a href=\"./swagger.json\">swagger declaration</a> file to generate code or static documentation (see <a href=\"https://github.com/cbornet/netatmo-swagger-api\">netatmo-swagger-api</a>)."
     },
     "host": "api.netatmo.net",
-    "basePath": "/api",
+    "basePath": "/",
     "schemes": [
         "https"
     ],
@@ -36,10 +36,107 @@
         {
             "name": "partner",
             "description": "Partner API specific methods"
+        },
+        {
+            "name": "oauth",
+            "description": "Oauth2 methods"
         }
     ],
     "paths": {
-        "/getuser": {
+        "/oauth2/token": {
+            "post": {
+                "tags": [
+                    "oauth"
+                ],
+                "description": "OAuth2 token endpoint\n",
+                "operationId": "getToken",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "grant_type",
+                        "in": "formData",
+                        "description": "Oauth2 grant type",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "password",
+                            "authorization_code",
+                            "refresh_token"
+                        ]
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "formData",
+                        "description": "Application client ID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "client_secret",
+                        "in": "formData",
+                        "description": "Application client secret",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "scope",
+                        "in": "formData",
+                        "description": "Scopes to use, separated by a space",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "User name if grant_type is password",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "User password if grant_type is password",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "formData",
+                        "description": "Authorization code if grant_type is authorization_code",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "redirect_uri",
+                        "in": "formData",
+                        "description": "Redirect URI if grant_type is authorization_code",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "refresh_token",
+                        "in": "formData",
+                        "description": "Refresh token if grant_type is refresh_token",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/AccessToken"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/getuser": {
             "get": {
                 "tags": [
                     "station",
@@ -48,6 +145,15 @@
                 ],
                 "description": "The method getuser returns information about a user such as prefered language, prefered units, and list of devices.\n",
                 "operationId": "getuser",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "Your access token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -56,18 +162,10 @@
                         }
                     }
                 },
-                "deprecated": true,
-                "security": [
-                    {
-                        "code_oauth": []
-                    },
-                    {
-                        "password_oauth": []
-                    }
-                ]
+                "deprecated": true
             }
         },
-        "/devicelist": {
+        "/api/devicelist": {
             "get": {
                 "tags": [
                     "station",
@@ -78,6 +176,13 @@
                 "description": "The method devicelist returns the list of devices owned by the user, and their modules.\nA device is identified by its _id (which is its mac address) and each device may have one, several or no modules, also identified by an _id.\n",
                 "operationId": "devicelist",
                 "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "Your access token",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "app_type",
                         "in": "query",
@@ -112,21 +217,10 @@
                         }
                     }
                 },
-                "deprecated": true,
-                "security": [
-                    {
-                        "code_oauth": [
-                            "read_thermostat",
-                            "read_station"
-                        ]
-                    },
-                    {
-                        "password_oauth": []
-                    }
-                ]
+                "deprecated": true
             }
         },
-        "/getmeasure": {
+        "/api/getmeasure": {
             "get": {
                 "tags": [
                     "station",
@@ -138,6 +232,13 @@
                 "description": "The method getmeasure returns the measurements of a device or a module.\n",
                 "operationId": "getmeasure",
                 "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "Your access token",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "device_id",
                         "in": "query",
@@ -222,21 +323,10 @@
                             "$ref": "#/definitions/NAMeasureResponse"
                         }
                     }
-                },
-                "security": [
-                    {
-                        "code_oauth": [
-                            "read_thermostat",
-                            "read_station"
-                        ]
-                    },
-                    {
-                        "password_oauth": []
-                    }
-                ]
+                }
             }
         },
-        "/getthermstate": {
+        "/api/getthermstate": {
             "get": {
                 "tags": [
                     "thermostat",
@@ -245,6 +335,13 @@
                 "description": "The method getthermstate returns the last Thermostat measurements, its current weekly schedule, and, if present, its current manual temperature setpoint.",
                 "operationId": "getthermstate",
                 "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "Your access token",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "device_id",
                         "in": "query",
@@ -268,20 +365,10 @@
                         }
                     }
                 },
-                "deprecated": true,
-                "security": [
-                    {
-                        "code_oauth": [
-                            "read_thermostat"
-                        ]
-                    },
-                    {
-                        "password_oauth": []
-                    }
-                ]
+                "deprecated": true
             }
         },
-        "/syncschedule": {
+        "/api/syncschedule": {
             "post": {
                 "tags": [
                     "thermostat"
@@ -289,6 +376,13 @@
                 "description": "The method syncschedule changes the Thermostat weekly schedule.",
                 "operationId": "syncschedule",
                 "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "Your access token",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "device_id",
                         "in": "query",
@@ -320,20 +414,10 @@
                             "$ref": "#/definitions/NAOkResponse"
                         }
                     }
-                },
-                "security": [
-                    {
-                        "code_oauth": [
-                            "write_thermostat"
-                        ]
-                    },
-                    {
-                        "password_oauth": []
-                    }
-                ]
+                }
             }
         },
-        "/setthermpoint": {
+        "/api/setthermpoint": {
             "post": {
                 "tags": [
                     "thermostat"
@@ -341,6 +425,13 @@
                 "description": "The method setthermpoint changes the Thermostat manual temperature setpoint.",
                 "operationId": "setthermpoint",
                 "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "Your access token",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "device_id",
                         "in": "query",
@@ -394,20 +485,10 @@
                             "$ref": "#/definitions/NAOkResponse"
                         }
                     }
-                },
-                "security": [
-                    {
-                        "code_oauth": [
-                            "write_thermostat"
-                        ]
-                    },
-                    {
-                        "password_oauth": []
-                    }
-                ]
+                }
             }
         },
-        "/switchschedule": {
+        "/api/switchschedule": {
             "post": {
                 "tags": [
                     "thermostat"
@@ -415,6 +496,13 @@
                 "description": "The method switchschedule switches the Thermostat's schedule to another existing schedule.",
                 "operationId": "switchschedule",
                 "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "Your access token",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "device_id",
                         "in": "query",
@@ -444,20 +532,10 @@
                             "$ref": "#/definitions/NAOkResponse"
                         }
                     }
-                },
-                "security": [
-                    {
-                        "code_oauth": [
-                            "write_thermostat"
-                        ]
-                    },
-                    {
-                        "password_oauth": []
-                    }
-                ]
+                }
             }
         },
-        "/createnewschedule": {
+        "/api/createnewschedule": {
             "post": {
                 "tags": [
                     "thermostat"
@@ -465,6 +543,13 @@
                 "description": "The method createnewschedule creates a new schedule stored in the backup list.",
                 "operationId": "createnewschedule",
                 "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "Your access token",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "device_id",
                         "in": "query",
@@ -496,26 +581,25 @@
                             "$ref": "#/definitions/NANewScheduleResponse"
                         }
                     }
-                },
-                "security": [
-                    {
-                        "code_oauth": [
-                            "write_thermostat"
-                        ]
-                    },
-                    {
-                        "password_oauth": []
-                    }
-                ]
+                }
             }
         },
-        "/partnerdevices": {
+        "/api/partnerdevices": {
             "get": {
                 "tags": [
                     "partner"
                 ],
                 "description": "The method partnerdevices returns the list of device_id to which your partner application has access to.",
                 "operationId": "partnerdevices",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "Your access token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -523,38 +607,35 @@
                             "$ref": "#/definitions/NAPartnerDevicesResponse"
                         }
                     }
-                },
-                "security": [
-                    {
-                        "code_oauth": []
-                    },
-                    {
-                        "password_oauth": []
-                    }
-                ]
+                }
             }
-        }
-    },
-    "securityDefinitions": {
-        "code_oauth": {
-            "type": "oauth2",
-            "authorizationUrl": "https://api.netatmo.net/oauth2/authorize",
-            "tokenUrl": "https://api.netatmo.net/oauth2/token",
-            "flow": "accessCode",
-            "scopes": {
-                "read_station": "Read weather station's data",
-                "write_thermostat": "Configure the thermostat",
-                "read_thermostat": "Read thermostat's data"
-            }
-        },
-        "password_oauth": {
-            "type": "oauth2",
-            "tokenUrl": "https://api.netatmo.net/oauth2/token",
-            "flow": "password",
-            "scopes": {}
         }
     },
     "definitions": {
+        "AccessToken": {
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "refresh_token": {
+                    "type": "string"
+                },
+                "expire_in": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "expires_in": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "scope": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "NAOkResponse": {
             "properties": {
                 "status": {
